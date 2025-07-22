@@ -20,8 +20,6 @@ public class AdocaoService {
     @Autowired
     private AdocaoRepository repository;
 
-    @Autowired
-    private JavaMailSender emailSender;
 
     public void solicitar(Adocao adocao){
         if (adocao.getPet().getAdotado() == true) {
