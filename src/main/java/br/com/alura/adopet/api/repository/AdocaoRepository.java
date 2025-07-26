@@ -11,4 +11,6 @@ public interface AdocaoRepository extends JpaRepository<Adocao, Long> {
 
     boolean existsByTutorIdAndStatus(Long id, StatusAdocao status);
 
+    long countByTutorIdAndStatus(Long tutorId, StatusAdocao status);
+
 }
