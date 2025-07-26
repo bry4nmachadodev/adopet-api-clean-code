@@ -49,12 +49,7 @@ public class AdocaoService {
         validacoes.forEach(v -> v.validar(dto));
 
         //criacao do classe de forma segura
-        Adocao adocao = new Adocao();
-        adocao.setData(LocalDateTime.now());
-        adocao.setStatus(StatusAdocao.AGUARDANDO_AVALIACAO);
-        adocao.setPet(pet);
-        adocao.setTutor(tutor);
-        adocao.setMotivo(dto.Motivo());
+        Adocao adocao = new Adocao(pet, tutor, dto.Motivo());
 
         repository.save(adocao);
 
@@ -67,7 +62,7 @@ public class AdocaoService {
     //precisa pegar no banco de dados pq vai ver das JÁ CADASTRADAS
     public void aprovar(AprovacaoAdocaoDTO dto){
         Adocao adocao = repository.getReferenceById(dto.idAdocao());
-        adocao.setStatus(StatusAdocao.APROVADO);
+        adocao.marcarComoAprovado();
 
         emailService.enviarEmail(
                 adocao.getPet().getAbrigo().getEmail(),
@@ -77,8 +72,8 @@ public class AdocaoService {
 
     public void reprovar(ReprovacaoAdocaoDTO dto){
         Adocao adocao = repository.getReferenceById(dto.idAdocao());
-        adocao.setStatus(StatusAdocao.REPROVADO);
-        adocao.setJustificativaStatus(dto.justificativa());
+        adocao.marcarComoReprovado(dto.justificativa());
+
         repository.save(adocao);
 
         emailService.enviarEmail(
