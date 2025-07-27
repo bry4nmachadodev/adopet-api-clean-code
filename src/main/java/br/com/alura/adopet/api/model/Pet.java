@@ -53,6 +53,17 @@ public class Pet {
         return Objects.equals(id, pet.id);
     }
 
+    //construtor para jpa
+    public Pet() {}
+
+    //construtor pra criar de forma controlada no service
+    public Pet(String nome, TipoPet tipo, String raca, Abrigo abrigo) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.raca = raca;
+        this.abrigo = abrigo;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
