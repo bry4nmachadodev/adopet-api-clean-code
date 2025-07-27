@@ -13,43 +13,35 @@ public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    @Column(name = "tipo")
     private TipoPet tipo;
 
     @NotBlank
-    @Column(name = "nome")
     private String nome;
 
     @NotBlank
-    @Column(name = "raca")
     private String raca;
 
     @NotNull
-    @Column(name = "idade")
     private Integer idade;
 
     @NotBlank
-    @Column(name = "cor")
     private String cor;
 
     @NotNull
-    @Column(name = "peso")
     private Float peso;
 
-    @Column(name = "adotado")
     private Boolean adotado;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference("abrigo_pets")
     @JoinColumn(name = "abrigo_id")
     private Abrigo abrigo;
 
-    @OneToOne(mappedBy = "pet")
+    @OneToOne(mappedBy = "pet", fetch = FetchType.EAGER)
     @JsonBackReference("adocao_pets")
     private Adocao adocao;
 
@@ -68,10 +60,6 @@ public class Pet {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public TipoPet getTipo() {
