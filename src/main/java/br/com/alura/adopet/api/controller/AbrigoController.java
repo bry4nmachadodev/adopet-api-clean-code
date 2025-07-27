@@ -1,5 +1,7 @@
 package br.com.alura.adopet.api.controller;
 
+import br.com.alura.adopet.api.dto.AbrigoDTO;
+import br.com.alura.adopet.api.dto.PetDTO;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.service.AbrigoService;
@@ -26,9 +28,9 @@ public class AbrigoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<String> cadastrarAbrigo(@RequestBody @Valid Abrigo abrigo) {
+    public ResponseEntity<String> cadastrarAbrigo(@RequestBody @Valid AbrigoDTO dto) {
         try{
-            this.abrigoService.cadastarAbrigo(abrigo);
+            this.abrigoService.cadastarAbrigo(dto);
             return ResponseEntity.ok("Abrigo cadastrado com sucesso!");
         } catch (ValidationException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -47,9 +49,9 @@ public class AbrigoController {
 
     @PostMapping("/{idOuNome}/pets")
     @Transactional
-    public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid Pet pet) {
+    public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid PetDTO dto) {
         try{
-            this.abrigoService.cadastrarPet(idOuNome, pet);
+            this.abrigoService.cadastrarPet(idOuNome, dto);
             return ResponseEntity.ok("Pet cadastrado com sucesso!");
         } catch (ValidationException e){
             return ResponseEntity.badRequest().body(e.getMessage());
