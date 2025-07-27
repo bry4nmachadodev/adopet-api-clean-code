@@ -19,7 +19,7 @@ public class PetController {
 
     @GetMapping
     public ResponseEntity<List<DadosDetalhesPet>> listarTodosDisponiveis() {
-        List<DadosDetalhesPet> disponiveis = petService.ListarOsPetsDisponiveis();
+        List<DadosDetalhesPet> disponiveis = petService.listarOsPetsDisponiveis();
         return ResponseEntity.ok(disponiveis);
     }
 

@@ -14,11 +14,11 @@ public class PetService {
     @Autowired
     private PetRepository repository;
 
-    public List<DadosDetalhesPet> ListarOsPetsDisponiveis(){
+    public List<DadosDetalhesPet> listarOsPetsDisponiveis(){
         List<Pet> pets = repository.findAll();
         List<DadosDetalhesPet> disponiveis = new ArrayList<>();
         for (Pet pet : pets) {
-            if (pet.getAdotado() == false) {
+            if (!pet.getAdotado()) {
                 disponiveis.add(new DadosDetalhesPet(pet));
             }
         }
