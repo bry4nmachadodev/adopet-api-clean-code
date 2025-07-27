@@ -2,9 +2,8 @@ package br.com.alura.adopet.api.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
-public record TutorDTO(
+public record TutorCadastroDTO(
         @NotBlank
         String nome,
         @NotBlank
