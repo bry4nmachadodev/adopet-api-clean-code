@@ -41,7 +41,7 @@ public class Pet {
     @JoinColumn(name = "abrigo_id")
     private Abrigo abrigo;
 
-    @OneToOne(mappedBy = "pet", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "pet", fetch = FetchType.LAZY)
     @JsonBackReference("adocao_pets")
     private Adocao adocao;
 
@@ -61,6 +61,7 @@ public class Pet {
     public Long getId() {
         return id;
     }
+
 
     public TipoPet getTipo() {
         return tipo;
