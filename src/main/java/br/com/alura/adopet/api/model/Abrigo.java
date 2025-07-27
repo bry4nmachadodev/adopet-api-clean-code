@@ -44,6 +44,16 @@ public class Abrigo {
         return Objects.equals(id, abrigo.id);
     }
 
+    //para jpa
+    public Abrigo() {}
+
+    //criacao segura no service
+    public Abrigo(String email, String telefone, String nome) {
+        this.email = email;
+        this.telefone = telefone;
+        this.nome = nome;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
