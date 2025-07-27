@@ -62,7 +62,6 @@ public class Pet {
         return id;
     }
 
-
     public TipoPet getTipo() {
         return tipo;
     }
