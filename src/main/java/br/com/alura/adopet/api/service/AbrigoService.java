@@ -1,9 +1,14 @@
 package br.com.alura.adopet.api.service;
 
+import br.com.alura.adopet.api.dto.AbrigoDTO;
+import br.com.alura.adopet.api.dto.PetDTO;
 import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Abrigo;
+import br.com.alura.adopet.api.model.Adocao;
 import br.com.alura.adopet.api.model.Pet;
+import br.com.alura.adopet.api.model.TipoPet;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
+import br.com.alura.adopet.api.validacoes.abrigo.ValidadorCadastroAbrigo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +20,18 @@ public class AbrigoService {
     @Autowired
     private AbrigoRepository repository;
 
+    @Autowired
+    private List<ValidadorCadastroAbrigo> validacoes;
+
     public List<Abrigo> listarTodos() {
         return repository.findAll();
     }
 
-    public void cadastarAbrigo(Abrigo abrigo){
-        boolean nomeJaCadastrado = repository.existsByNome(abrigo.getNome());
-        boolean telefoneJaCadastrado = repository.existsByTelefone(abrigo.getTelefone());
-        boolean emailJaCadastrado = repository.existsByEmail(abrigo.getEmail());
+    public void cadastarAbrigo(AbrigoDTO dto){
+        validacoes.forEach(v -> v.validar(dto));
 
-        if (nomeJaCadastrado || telefoneJaCadastrado || emailJaCadastrado) {
-            throw new ValidacaoException("Dados já cadastrados para outro abrigo!");
-        }
+        //criacao da entidade abrigo de forma segura
+        Abrigo abrigo = new Abrigo(dto.nome(), dto.telefone(), dto.email());
 
         repository.save(abrigo);
     }
@@ -41,18 +46,18 @@ public class AbrigoService {
     }
 
 
-    public void cadastrarPet(String idOuNome, Pet pet){
+    public void cadastrarPet(String idOuNome, PetDTO dto){
         try {
             Long id = Long.parseLong(idOuNome);
             Abrigo abrigo = repository.getReferenceById(id);
-            pet.setAbrigo(abrigo);
-            pet.setAdotado(false);
+
+            Pet pet = new Pet(dto.nome(), dto.tipo(), dto.raca(), abrigo);
             abrigo.getPets().add(pet);
             repository.save(abrigo);
-        }catch (NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             Abrigo abrigo = repository.findByNome(idOuNome);
-            pet.setAbrigo(abrigo);
-            pet.setAdotado(false);
+
+            Pet pet = new Pet(dto.nome(), dto.tipo(), dto.raca(), abrigo);
             abrigo.getPets().add(pet);
             repository.save(abrigo);
         }
