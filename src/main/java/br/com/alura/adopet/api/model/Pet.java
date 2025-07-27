@@ -16,22 +16,16 @@ public class Pet {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     private TipoPet tipo;
 
-    @NotBlank
     private String nome;
 
-    @NotBlank
     private String raca;
 
-    @NotNull
     private Integer idade;
 
-    @NotBlank
     private String cor;
 
-    @NotNull
     private Float peso;
 
     private Boolean adotado;
