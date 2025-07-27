@@ -14,7 +14,7 @@ public class PetService {
     @Autowired
     private PetRepository repository;
 
-    public void ListarOsPetsDisponiveis(){
+    public List<DadosDetalhesPet> ListarOsPetsDisponiveis(){
         List<Pet> pets = repository.findAll();
         List<DadosDetalhesPet> disponiveis = new ArrayList<>();
         for (Pet pet : pets) {
@@ -22,5 +22,6 @@ public class PetService {
                 disponiveis.add(new DadosDetalhesPet(pet));
             }
         }
+        return disponiveis;
     }
 }
