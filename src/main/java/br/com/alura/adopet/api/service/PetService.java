@@ -15,12 +15,11 @@ public class PetService {
     private PetRepository repository;
 
     public List<DadosDetalhesPet> listarOsPetsDisponiveis(){
-        List<Pet> pets = repository.findAll();
+        List<Pet> pets = repository.findByAdotadoFalse();
         List<DadosDetalhesPet> disponiveis = new ArrayList<>();
+
         for (Pet pet : pets) {
-            if (!pet.getAdotado()) {
-                disponiveis.add(new DadosDetalhesPet(pet));
-            }
+            disponiveis.add(new DadosDetalhesPet(pet));
         }
         return disponiveis;
     }
