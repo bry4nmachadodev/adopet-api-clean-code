@@ -14,9 +14,19 @@ public class AbrigoService {
     @Autowired
     private AbrigoRepository repository;
 
-    public void cadastarAbrigo(Abrigo abrigo){}
+    public List<Abrigo> listarTodos() {
+        return repository.findAll();
+    }
 
-    public List<Pet> listarPets(String idOuNome){}
+    public void cadastarAbrigo(Abrigo abrigo){
 
-    public void cadastrarPet(String idOuNome, Pet pet){}
+    }
+
+    public List<Pet> listarPets(String idOuNome){
+        return;
+    }
+
+    public void cadastrarPet(String idOuNome, Pet pet){
+
+    }
 }
