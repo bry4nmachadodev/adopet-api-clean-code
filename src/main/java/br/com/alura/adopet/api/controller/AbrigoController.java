@@ -3,8 +3,10 @@ package br.com.alura.adopet.api.controller;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
+import br.com.alura.adopet.api.service.AbrigoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,28 +19,43 @@ import java.util.List;
 public class AbrigoController {
 
     @Autowired
-    private AbrigoRepository repository;
+    private AbrigoService abrigoService;
 
     @GetMapping
     public ResponseEntity<List<Abrigo>> listar() {
-        return ResponseEntity.ok(repository.findAll());
+        return ResponseEntity.ok(abrigoService.listarTodos());
     }
 
     @PostMapping
     @Transactional
     public ResponseEntity<String> cadastrarAbrigo(@RequestBody @Valid Abrigo abrigo) {
-
+        try{
+            this.abrigoService.cadastarAbrigo(abrigo);
+            return ResponseEntity.ok("Abrigo cadastrado com sucesso!");
+        } catch (ValidationException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{idOuNome}/pets")
     public ResponseEntity<List<Pet>> listarPets(@PathVariable String idOuNome) {
-
+        try{
+            List<Pet> pets= abrigoService.listarPets(idOuNome);
+            return ResponseEntity.ok(pets);
+        } catch (ValidationException e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/{idOuNome}/pets")
     @Transactional
     public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid Pet pet) {
-
+        try{
+            this.abrigoService.cadastrarPet(idOuNome, pet);
+            return ResponseEntity.ok("Pet cadastrado com sucesso!");
+        } catch (ValidationException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }
