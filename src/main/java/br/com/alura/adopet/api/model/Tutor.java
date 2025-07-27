@@ -36,6 +36,16 @@ public class Tutor {
     @JsonManagedReference("tutor_adocoes")
     private List<Adocao> adocoes;
 
+    //construtor puro para jpa
+    public Tutor() {}
+
+    //construtor para criacao do tutor segura na service
+    public Tutor(String nome, String email, String telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
