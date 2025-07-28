@@ -1,4 +1,4 @@
-## 💻 Sobre o projeto
+## 💻 Foco do projeto
 
 O foco desse projeto foi pegar um projeto antigo que estava com má prática e refatorar-lo. Buscando adicionar melhorias e segurança.
 
